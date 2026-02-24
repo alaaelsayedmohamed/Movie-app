@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 import MovieCard from "../components/MovieCard";
 
+
 export default function Home({ addToWatchlist }) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -9,12 +10,13 @@ export default function Home({ addToWatchlist }) {
   const [searchText, setSearchText] = useState(""); 
   const [isSearching, setIsSearching] = useState(false); 
 
- 
-  const fetchMovies = async () => {
+
+ const fetchMovies = async () => {
     try {
-      const url = isSearching && searchText
-        ? `https://api.themoviedb.org/3/search/movie?api_key=3efb676a06eeac70ff18f5076611adab&query=${searchText}&page=${page}`
-        : `https://api.themoviedb.org/3/movie/popular?api_key=3efb676a06eeac70ff18f5076611adab&page=${page}`;
+      const url =
+        isSearching && searchText
+          ? `https://api.themoviedb.org/3/search/movie?api_key=3efb676a06eeac70ff18f5076611adab&query=${searchText}&page=${page}`
+          : `https://api.themoviedb.org/3/movie/popular?api_key=3efb676a06eeac70ff18f5076611adab&page=${page}`;
 
       const res = await axios.get(url);
       setMovies(res.data.results);
@@ -23,17 +25,14 @@ export default function Home({ addToWatchlist }) {
       console.error(err);
     }
   };
+
   useEffect(() => {
     fetchMovies();
-  }, [page]);
-  useEffect(() => {
-  fetchMovies();
-}, [fetchMovies]);
+  }, [page, isSearching, searchText]);
 
- 
   const handleSearch = () => {
     setIsSearching(true);
-    setPage(1); 
+    setPage(1);
     fetchMovies();
   };
 
