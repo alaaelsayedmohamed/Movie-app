@@ -25,7 +25,10 @@ export default function Home({ addToWatchlist }) {
   };
   useEffect(() => {
     fetchMovies();
-  }, [page ,fetchMovies]);
+  }, [page]);
+  useEffect(() => {
+  fetchMovies();
+}, [fetchMovies]);
 
  
   const handleSearch = () => {
